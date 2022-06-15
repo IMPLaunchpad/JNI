@@ -186,6 +186,58 @@ Java_com_example_myapplication_MainActivity_FLEDControl(
     return ret;
 }
 
+//////////////////
+//////LED/////
+///////////////
+
+
+JNIEXPORT jint JNICALL
+Java_com_example_myapplication_MainActivity_LEDControl(
+        JNIEnv* env,
+        jobject abc,
+        jint data
+) {
+    int fd, ret;
+
+    fd = open("/dev/fpga_led", O_WRONLY);
+    if(fd < 0) return -errno;
+    if(fd > 0) {
+        data &= 0xff;
+        ret = write(fd, &data, 1);
+        close(fd);
+    } else return fd;
+
+    if(ret == 1) return 0;
+
+    return -1;
+}
+
+
+////////////////////
+////// piezo //////
+///////////////////
+
+JNIEXPORT jint JNICALL
+Java_com_example_myapplication_MainActivity_PiezoControl(
+        JNIEnv* env,
+        jobject abc,
+        jint value
+) {
+    int fd, ret;
+    int data = value;
+
+    fd = open("/dev/fpga_piezo", O_WRONLY);
+    if(fd < 0) return -errno;
+
+    ret = write(fd, &data, 1);
+    close(fd);
+
+
+    if(ret == 1) return 0;
+
+    return -1;
+}
+
 
 
 
