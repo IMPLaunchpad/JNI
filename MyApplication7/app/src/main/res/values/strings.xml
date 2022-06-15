@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">IMPLaunchPad</string>
+
+    <string-array name="songs">
+        <item>OMFG - Hello</item>
+    </string-array>
 </resources>
