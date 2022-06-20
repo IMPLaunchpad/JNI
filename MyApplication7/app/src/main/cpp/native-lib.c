@@ -202,7 +202,7 @@ Java_com_example_myapplication_MainActivity_LEDControl(
     fd = open("/dev/fpga_led", O_WRONLY);
     if(fd < 0) return -errno;
     if(fd > 0) {
-        data &= 0xff;
+        data;
         ret = write(fd, &data, 1);
         close(fd);
     } else return fd;
@@ -225,6 +225,8 @@ Java_com_example_myapplication_MainActivity_PiezoControl(
 ) {
     int fd, ret;
     int data = value;
+
+    data &=
 
     fd = open("/dev/fpga_piezo", O_WRONLY);
     if(fd < 0) return -errno;

@@ -214,6 +214,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDismiss(DialogInterface dialog) {
                 FLEDControl(ALL_LED, 0, 0, 0);
                 FLEDControl(ALL_LED, 100, 100, 100);
+                PiezoControl(1); // 부저 on
 
                 for (int i = 0; i < 4; i++) {
                     for (int j = 0; j < 4; j++) {
@@ -229,20 +230,112 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-                try {
-                    Thread.sleep(1000);
-                } catch (Exception e) {
+
+                int offset = 18;
+                int bpm = 105 - offset;
+                int interval = bpm * 2;
+
+                class BPMDisplay implements Runnable {
+
+                    @Override
+                    public void run() {
+                        while(true){
+                            LEDControl(0b1);
+
+                            try {
+                                Thread.sleep(interval);
+                            }catch (Exception e){
+                            }
+
+                            LEDControl(0b10);
+
+                            try {
+                                Thread.sleep(interval);
+                            }catch (Exception e){
+                            }
+                            LEDControl(0b100);
+
+                            try {
+                                Thread.sleep(interval);
+                            }catch (Exception e){
+                            }
+                            LEDControl(0b1000);
+
+                            try {
+                                Thread.sleep(interval);
+                            }catch (Exception e){
+                            }
+                            LEDControl(0b10000);
+
+                            try {
+                                Thread.sleep(interval);
+                            }catch (Exception e){
+                            }
+                            LEDControl(0b100000);
+
+                            try {
+                                Thread.sleep(interval);
+                            }catch (Exception e){
+                            }
+                            LEDControl(0b1000000);
+
+                            try {
+                                Thread.sleep(interval);
+                            }catch (Exception e){
+                            }
+                            LEDControl(0b10000000);
+
+                            try {
+                                Thread.sleep(interval);
+                            }catch (Exception e){
+                            }
+                            LEDControl(0b1000000);
+
+                            try {
+                                Thread.sleep(interval);
+                            }catch (Exception e){
+                            }
+                            LEDControl(0b100000);
+                            try {
+                                Thread.sleep(interval);
+                            }catch (Exception e){
+                            }
+                            LEDControl(0b10000);
+                            try {
+                                Thread.sleep(interval);
+                            }catch (Exception e){
+                            }
+                            LEDControl(0b1000);
+
+                            try {
+                                Thread.sleep(interval);
+                            }catch (Exception e){
+                            }
+                            LEDControl(0b100);
+                            try {
+                                Thread.sleep(interval);
+                            }catch (Exception e){
+                            }
+                            LEDControl(0b10);
+                            try {
+                                Thread.sleep(interval);
+                            }catch (Exception e){
+                            }
+                            LEDControl(0b1);
+                        }
+                    }
                 }
+
+                BPMDisplay bpmDisplay = new BPMDisplay();
+                Thread t = new Thread(bpmDisplay) ;
+                t.start() ;
+
+                try {
+                    Thread.sleep(2500);
+                }catch (Exception e){
+                }
+
                 FLEDControl(ALL_LED, 0, 0, 0);
-
-                PiezoControl(1); // 부저 on
-
-                try {
-                    Thread.sleep(1000);
-                } catch (Exception e) {
-                }
-
-                PiezoControl(0); // 부저 off
                 PiezoControl(0); // 부저 off
             }
         });
